@@ -8,6 +8,7 @@ const handle = app.getRequestHandler();
 app
   .prepare()
   .then(() => {
+    console.log(`env="${process.env.NODE_ENV}"`);
     const server = express();
 
     server.get('/post/:id', (req, res) => {

@@ -1,6 +1,7 @@
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
+import Button from '../components/Button';
 
 const Post = props => {
   const id = parseInt(props.router.query.id);
@@ -22,7 +23,7 @@ const Post = props => {
       </p>
       <p>
         <Link href="/">
-          <a>Accueil</a>
+          <Button>Accueil</Button>
         </Link>
       </p>
     </div>
