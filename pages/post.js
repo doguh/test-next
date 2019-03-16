@@ -1,10 +1,18 @@
 import { withRouter } from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 
 const Post = props => {
   const id = parseInt(props.router.query.id);
   return (
     <div>
+      <Head>
+        <title>Article {id}</title>
+        <meta
+          name="description"
+          content={`Une description de l'article ${id}`}
+        />
+      </Head>
       <h1>Article {id}</h1>
       <pre>{props.dummy}</pre>
       <p>

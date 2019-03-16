@@ -1,7 +1,11 @@
 import Link from 'next/link';
+import Head from 'next/head';
 
 const Index = () => (
   <div>
+    <Head>
+      <title>Page d'accueil</title>
+    </Head>
     <h1>Hello Next.js</h1>
     <ul>
       <li>
