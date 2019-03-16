@@ -1,10 +1,12 @@
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
+import fetch from 'isomorphic-unfetch';
 import Button from '../components/Button';
 
 const Post = props => {
   const id = parseInt(props.router.query.id);
+  const { post } = props;
   return (
     <div>
       <Head>
@@ -14,8 +16,14 @@ const Post = props => {
           content={`Une description de l'article ${id}`}
         />
       </Head>
-      <h1>Article {id}</h1>
-      <pre>{props.dummy}</pre>
+      {post ? (
+        <>
+          <h1>{post.title}</h1>
+          <p>{post.content}</p>
+        </>
+      ) : (
+        <p>Ce post n'existe pas !</p>
+      )}
       <p>
         <Link as={`/post/${id + 1}`} href={`/post?id=${id + 1}`}>
           <a>Article suivant</a>
@@ -31,13 +39,9 @@ const Post = props => {
 };
 
 Post.getInitialProps = async props => {
-  // console.log({ props });
-  // if (props.req) {
-  //   return new Promise(resolve => setTimeout(resolve, 5000, { dummy: 'haha' }));
-  // } else {
-  //   return {};
-  // }
-  return {};
+  const res = await fetch(`http://localhost:3000/api/posts/${props.query.id}`);
+  const post = res.ok ? await res.json() : null;
+  return { post };
 };
 
 export default withRouter(Post);

@@ -1,5 +1,6 @@
 const express = require('express');
 const next = require('next');
+const api = require('./api');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -10,6 +11,8 @@ app
   .then(() => {
     console.log(`env="${process.env.NODE_ENV}"`);
     const server = express();
+
+    server.use('/api', api);
 
     server.get('/post/:id', (req, res) => {
       console.log(`in GET /post/${req.params.id}`);
