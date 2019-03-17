@@ -20,6 +20,12 @@ app
 
     server.use('/api', api);
 
+    server.get('/post/:id', (req, res) => {
+      const actualPage = '/post';
+      const queryParams = { id: req.params.id };
+      return app.render(req, res, actualPage, queryParams);
+    });
+
     server.get('*', (req, res) => {
       // find if req.url match any permalink
       const url = req.url.split('?')[0];

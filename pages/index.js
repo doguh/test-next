@@ -32,6 +32,14 @@ class PostsList extends React.Component {
               <li key={post.id}>
                 <Link as={`${post.permalink}`} href={`/post?id=${post.id}`}>
                   <a>{post.title}</a>
+                </Link>{' '}
+                |{' '}
+                <Link href={`/post?id=${post.id}`}>
+                  <a>/post?id={post.id}</a>
+                </Link>{' '}
+                |{' '}
+                <Link as={`/post/${post.id}`} href={`/post?id=${post.id}`}>
+                  <a>/post/{post.id}</a>
                 </Link>
               </li>
             );
