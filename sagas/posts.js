@@ -10,7 +10,7 @@ import {
 import Api from '../lib/api';
 
 function* doFetchPost({ id, ctx }) {
-  const r = yield Api.get(`/posts/${id}`)
+  const r = yield Api.get(`posts/${id}`)
     .then(json => {
       return put(fetchPostSuccess(json));
     })
@@ -24,7 +24,7 @@ function* doFetchPost({ id, ctx }) {
 }
 
 function* doFetchPostsList({ filter, ctx }) {
-  const r = yield Api.get('/posts/')
+  const r = yield Api.get('posts')
     .then(json => {
       return put(fetchPostsListSuccess(json));
     })
