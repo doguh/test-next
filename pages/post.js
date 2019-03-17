@@ -16,26 +16,9 @@ class Post extends React.Component {
 
   render() {
     const id = parseInt(this.props.router.query.id);
-    const { post, error, fetching } = this.props;
     return (
       <Template>
-        <Head>
-          <title>Article {id}</title>
-          <meta
-            name="description"
-            content={`Une description de l'article ${id}`}
-          />
-        </Head>
-        <section>
-          {post ? (
-            <>
-              <h1>{post.title}</h1>
-              <p>{post.content}</p>
-            </>
-          ) : null}
-          {error ? <p>Impossible de charger ce post</p> : null}
-          {fetching ? <p>Chargement...</p> : null}
-        </section>
+        <ConnectedPost />
         <p>
           <Link as={`/post/${id + 1}`} href={`/post?id=${id + 1}`}>
             <a>Article suivant</a>
@@ -51,6 +34,33 @@ class Post extends React.Component {
   }
 }
 
+class InnerPost extends React.Component {
+  render() {
+    const { post, error, fetching } = this.props;
+    return (
+      <>
+        <section>
+          {post ? (
+            <>
+              <Head>
+                <title>{post.title}</title>
+                <meta
+                  name="description"
+                  content={`Une description de l'article ${post.title}`}
+                />
+              </Head>
+              <h1>{post.title}</h1>
+              <p>{post.content}</p>
+            </>
+          ) : null}
+          {error ? <p>Impossible de charger ce post</p> : null}
+          {fetching ? <p>Chargement...</p> : null}
+        </section>
+      </>
+    );
+  }
+}
+
 function mapStateToProps(state) {
   return {
     fetching: state.posts.fetchingPost,
@@ -59,4 +69,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withRouter(Post));
+const ConnectedPost = connect(mapStateToProps)(InnerPost);
+
+export default withRouter(Post);

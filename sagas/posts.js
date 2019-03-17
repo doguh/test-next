@@ -8,7 +8,6 @@ function* doFetchPost({ id, ctx }) {
       return put(fetchPostSuccess(json));
     })
     .catch(({ status, message }) => {
-      console.log('err', { status, message });
       if (ctx.isServer) {
         ctx.res.statusCode = status;
       }
