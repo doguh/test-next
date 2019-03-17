@@ -13,18 +13,14 @@ app
     console.log(`env="${process.env.NODE_ENV}"`);
     const server = express();
 
+    server.use((req, res, next) => {
+      console.log(`in ${req.method} ${req.url}`);
+      next();
+    });
+
     server.use('/api', api);
 
-    // server.get('/post/:id', (req, res) => {
-    //   console.log(`in GET /post/${req.params.id}`);
-    //   const actualPage = '/post';
-    //   const queryParams = { id: req.params.id };
-    //   app.render(req, res, actualPage, queryParams);
-    // });
-
     server.get('*', (req, res) => {
-      console.log(`in GET ${req.url}`);
-
       // find if req.url match any permalink
       const url = req.url.split('?')[0];
       const post = allPosts.find(p => url === p.permalink);
