@@ -13,6 +13,11 @@ app
     console.log(`env="${process.env.NODE_ENV}"`);
     const server = express();
 
+    server.get('/_next/*', (req, res) => {
+      console.log('serving _next content', req.url);
+      return handle(req, res);
+    });
+
     server.use((req, res, next) => {
       console.log(`in ${req.method} ${req.url}`);
       next();
