@@ -19,6 +19,10 @@ function configureStore(initialState = {}) {
     bindMiddleware([sagaMiddleware])
   );
 
+  /**
+   * next-redux-saga depends on `sagaTask` being attached to the store.
+   * It is used to await the rootSaga task before sending results to the client.
+   */
   store.sagaTask = sagaMiddleware.run(sagas);
 
   return store;

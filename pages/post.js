@@ -7,15 +7,17 @@ import { fetchPost } from '../actions/posts';
 
 class Post extends React.Component {
   static getInitialProps = async props => {
-    props.ctx.store.dispatch(fetchPost(props.ctx.query.id));
+    const { store, query, isServer, res } = props.ctx;
+    // a context is passed to fetchPost() so the saga can change res.status in case of error
+    store.dispatch(fetchPost(query.id, { isServer, res }));
     return {};
   };
 
   render() {
     const id = parseInt(this.props.router.query.id);
-    const { post, error } = this.props;
+    const { post, error, fetching } = this.props;
     return (
-      <div>
+      <>
         <Head>
           <title>Article {id}</title>
           <meta
@@ -23,16 +25,16 @@ class Post extends React.Component {
             content={`Une description de l'article ${id}`}
           />
         </Head>
-        {post ? (
-          <>
-            <h1>{post.title}</h1>
-            <p>{post.content}</p>
-          </>
-        ) : error ? (
-          <p>Ce post n'existe pas !</p>
-        ) : (
-          <p>Chargement...</p>
-        )}
+        <section>
+          {post ? (
+            <>
+              <h1>{post.title}</h1>
+              <p>{post.content}</p>
+            </>
+          ) : null}
+          {error ? <p>Impossible de charger ce post</p> : null}
+          {fetching ? <p>Chargement...</p> : null}
+        </section>
         <p>
           <Link as={`/post/${id + 1}`} href={`/post?id=${id + 1}`}>
             <a>Article suivant</a>
@@ -43,7 +45,7 @@ class Post extends React.Component {
             <Button>Accueil</Button>
           </Link>
         </p>
-      </div>
+      </>
     );
   }
 }

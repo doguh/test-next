@@ -2,14 +2,18 @@ import { takeLatest, put } from 'redux-saga/effects';
 import { FETCH_POST, fetchPostSuccess, fetchPostError } from '../actions/posts';
 import fetch from 'isomorphic-unfetch';
 
-function* doFetchPost(action) {
-  //   yield new Promise(resolve => setTimeout(resolve, 1000));
-  const res = yield fetch(`http://localhost:3000/api/posts/${action.id}`);
+function* doFetchPost({ id, ctx }) {
+  const res = yield fetch(`http://localhost:3000/api/posts/${id}`);
   if (res.ok) {
     const post = yield res.json();
     yield put(fetchPostSuccess(post));
   } else {
-    yield put(fetchPostError({ code: res.code, message: res.body }));
+    const message = yield res.text();
+    const code = res.status;
+    if (ctx.isServer) {
+      ctx.res.statusCode = code;
+    }
+    yield put(fetchPostError({ code, message }));
   }
 }
 
