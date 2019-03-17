@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import Head from 'next/head';
+import Template from '../components/Template';
 
 const Index = () => (
-  <div>
+  <Template>
     <Head>
       <title>Page d'accueil</title>
     </Head>
@@ -14,7 +15,7 @@ const Index = () => (
         </Link>
       </li>
     </ul>
-  </div>
+  </Template>
 );
 
 export default Index;

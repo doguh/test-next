@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { connect } from 'react-redux';
 import Button from '../components/Button';
 import { fetchPost } from '../actions/posts';
+import Template from '../components/Template';
 
 class Post extends React.Component {
   static getInitialProps = async props => {
@@ -17,7 +18,7 @@ class Post extends React.Component {
     const id = parseInt(this.props.router.query.id);
     const { post, error, fetching } = this.props;
     return (
-      <>
+      <Template>
         <Head>
           <title>Article {id}</title>
           <meta
@@ -45,7 +46,7 @@ class Post extends React.Component {
             <Button>Accueil</Button>
           </Link>
         </p>
-      </>
+      </Template>
     );
   }
 }
