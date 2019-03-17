@@ -1,11 +1,13 @@
 [
   {
     "id": 1,
+    "permalink": "/sentry-beep",
     "title": "Sentry Beep",
     "content": "You used to uber me on Dustbowl"
   },
   {
     "id": 2,
+    "permalink": "/lenny-bind",
     "title": "Lenny Bind",
     "content": "He's so hip and fly, he's the coolest guy, cause he's got a Lenny Bind!"
   }

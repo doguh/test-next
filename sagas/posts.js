@@ -1,5 +1,12 @@
 import { takeLatest, put } from 'redux-saga/effects';
-import { FETCH_POST, fetchPostSuccess, fetchPostError } from '../actions/posts';
+import {
+  FETCH_POST,
+  fetchPostSuccess,
+  fetchPostError,
+  FETCH_POSTS_LIST,
+  fetchPostsListSuccess,
+  fetchPostsListError,
+} from '../actions/posts';
 import Api from '../lib/api';
 
 function* doFetchPost({ id, ctx }) {
@@ -16,6 +23,21 @@ function* doFetchPost({ id, ctx }) {
   yield r;
 }
 
+function* doFetchPostsList({ filter, ctx }) {
+  const r = yield Api.get('/posts/')
+    .then(json => {
+      return put(fetchPostsListSuccess(json));
+    })
+    .catch(({ status, message }) => {
+      if (ctx.isServer) {
+        ctx.res.statusCode = status;
+      }
+      return put(fetchPostsListError({ status, message }));
+    });
+  yield r;
+}
+
 export default function* authSaga() {
   yield takeLatest(FETCH_POST, doFetchPost);
+  yield takeLatest(FETCH_POSTS_LIST, doFetchPostsList);
 }

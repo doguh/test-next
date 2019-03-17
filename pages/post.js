@@ -20,11 +20,6 @@ class Post extends React.Component {
       <Template>
         <ConnectedPost />
         <p>
-          <Link as={`/post/${id + 1}`} href={`/post?id=${id + 1}`}>
-            <a>Article suivant</a>
-          </Link>
-        </p>
-        <p>
           <Link href="/">
             <Button>Accueil</Button>
           </Link>
@@ -38,25 +33,23 @@ class InnerPost extends React.Component {
   render() {
     const { post, error, fetching } = this.props;
     return (
-      <>
-        <section>
-          {post ? (
-            <>
-              <Head>
-                <title>{post.title}</title>
-                <meta
-                  name="description"
-                  content={`Une description de l'article ${post.title}`}
-                />
-              </Head>
-              <h1>{post.title}</h1>
-              <p>{post.content}</p>
-            </>
-          ) : null}
-          {error ? <p>Impossible de charger ce post</p> : null}
-          {fetching ? <p>Chargement...</p> : null}
-        </section>
-      </>
+      <section>
+        {post ? (
+          <>
+            <Head>
+              <title>{post.title}</title>
+              <meta
+                name="description"
+                content={`Une description de l'article ${post.title}`}
+              />
+            </Head>
+            <h1>{post.title}</h1>
+            <p>{post.content}</p>
+          </>
+        ) : null}
+        {error ? <p>Impossible de charger ce post</p> : null}
+        {fetching ? <p>Chargement...</p> : null}
+      </section>
     );
   }
 }
