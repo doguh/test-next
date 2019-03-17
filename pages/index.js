@@ -29,7 +29,7 @@ class PostsList extends React.Component {
         {posts &&
           posts.map(post => {
             return (
-              <li>
+              <li key={post.id}>
                 <Link as={`${post.permalink}`} href={`/post?id=${post.id}`}>
                   <a>{post.title}</a>
                 </Link>
