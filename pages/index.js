@@ -15,7 +15,7 @@ const Index = () => (
 );
 
 Index.getInitialProps = async props => {
-  const { store, isServer, res } = props.ctx;
+  const { store, isServer, res } = props;
   // a context is passed to fetchPost() so the saga can change res.status in case of error
   store.dispatch(fetchPostsList(null, { isServer, res }));
   return {};

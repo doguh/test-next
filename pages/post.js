@@ -8,7 +8,7 @@ import Template from '../components/Template';
 
 class Post extends React.Component {
   static getInitialProps = async props => {
-    const { store, query, isServer, res } = props.ctx;
+    const { store, query, isServer, res } = props;
     // a context is passed to fetchPost() so the saga can change res.status in case of error
     store.dispatch(fetchPost(query.id, { isServer, res }));
     return {};
