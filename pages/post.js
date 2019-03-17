@@ -2,6 +2,7 @@ import { withRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 import { connect } from 'react-redux';
+import dispatchAndWait from '../lib/dispatchAndWait';
 import Button from '../components/Button';
 import { fetchPost } from '../actions/posts';
 import Template from '../components/Template';
@@ -10,7 +11,14 @@ class Post extends React.Component {
   static getInitialProps = async props => {
     const { store, query, isServer, res } = props;
     // a context is passed to fetchPost() so the saga can change res.status in case of error
-    store.dispatch(fetchPost(query.id, { isServer, res }));
+    const action = fetchPost(query.id, { isServer, res });
+
+    if (!isServer) {
+      await dispatchAndWait(store, action, state => !state.posts.fetchingPost);
+    } else {
+      store.dispatch(action);
+    }
+
     return {};
   };
 
