@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import dispatchAndWait from '../lib/dispatchAndWait';
 import Button from '../components/Button';
 import { fetchPost } from '../actions/posts';
-import Template from '../components/Template';
 
 class Post extends React.Component {
   static getInitialProps = async props => {
@@ -23,16 +22,15 @@ class Post extends React.Component {
   };
 
   render() {
-    const id = parseInt(this.props.router.query.id);
     return (
-      <Template>
+      <>
         <ConnectedPost />
         <p>
           <Link href="/">
             <Button>Accueil</Button>
           </Link>
         </p>
-      </Template>
+      </>
     );
   }
 }

@@ -1,17 +1,16 @@
 import Link from 'next/link';
 import Head from 'next/head';
 import { connect } from 'react-redux';
-import Template from '../components/Template';
 import { fetchPostsList } from '../actions/posts';
 
 const Index = () => (
-  <Template>
+  <>
     <Head>
       <title>Page d'accueil</title>
     </Head>
     <h1>Hello Next.js</h1>
     <ConnectedPostsList />
-  </Template>
+  </>
 );
 
 Index.getInitialProps = async props => {
