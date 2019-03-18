@@ -13,6 +13,11 @@ app
     console.log(`env="${process.env.NODE_ENV}"`);
     const server = express();
 
+    server.get(/^\/(static|_next\/static)/, (req, res) => {
+      console.log('serving static content', req.url);
+      return handle(req, res);
+    });
+
     server.get('/_next/*', (req, res) => {
       console.log('serving _next content', req.url);
       return handle(req, res);
@@ -32,6 +37,7 @@ app
     });
 
     server.get('*', (req, res) => {
+      console.log("in '*'");
       // find if req.url match any permalink
       const url = req.url.split('?')[0];
       const post = allPosts.find(p => url === p.permalink);
